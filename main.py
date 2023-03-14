@@ -9,7 +9,7 @@ AD_USERNAME: str = ad_username
 AD_PASSWORD: str = ad_password
 AD_SERVER: str = ad_server
 pyad.set_defaults(ldap_server=ad_server, username=ad_username, password=ad_password)
-user = pyad.aduser.ADUser.from_cn("")
+user: str = pyad.aduser.ADUser.from_cn("******")
 
 
 # функция Transliteration, яка транслітерує заданий аргумент (ім’я) кирилицею з латиницi
@@ -113,8 +113,8 @@ if username:
     # вiдображення змін
     user.update()    
     passwd: str = password() 
-    print(f'Пользователь создан:\n'
+    print(f'Користувача створено:\n'
           f'{ad_username}@kvadra.in.ua\n'
-          f'Логин: {ad_username}\n'
+          f'Логін: {ad_username}\n'
           f'Пароль: {ad_password}'
           ) 
