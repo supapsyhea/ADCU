@@ -9,7 +9,7 @@ AD_USERNAME: str = ad_username
 AD_PASSWORD: str = ad_password
 AD_SERVER: str = ad_server
 pyad.set_defaults(ldap_server=ad_server, username=ad_username, password=ad_password)
-user: str = pyad.aduser.ADUser.from_cn("******")
+user = pyad.aduser.ADUser.from_cn("")
 
 
 # функция Transliteration, яка транслітерує заданий аргумент (ім’я) кирилицею з латиницi
@@ -55,52 +55,7 @@ if username:
     user.set_password(passwd)
     user.set_password_never_expires(True)
     user.set_password_expired(False)
-    user.set_user_account_control_settings(pyad.aduser.import pyad.adquery
-    from pyad.aduser import ADUser
-    from ad_settings import ad_username, ad_password, ad_server
-    from alphabet import ukr_alphabet
-    from passgen import password
-    
-    def transliterate_ukr(name: str) -> str:
-        try:
-            first_name, last_name = name.split()
-            
-            if not all(ch in ukr_alphabet for ch in first_name+last_name):
-                raise ValueError("Input string contains non-Cyrillic characters")
-    
-            translit_name = f"{ukr_alphabet.get(last_name[0], last_name[0])}.{''.join([ukr_alphabet.get(ch, ch) for ch in first_name])}"
-            return translit_name.lower()
-        
-        except ValueError as e:  
-            print(f"Error: {e}") 
-            return ''
-    
-    name = input('Paste fullname: ')
-    username = transliterate_ukr(name)
-    
-    if username:
-        pyad.set_defaults(ldap_server=ad_server, username=ad_username, password=ad_password)
-        passwd = password()
-        
-        user = ADUser.from_cn(transliterate_ukr(name), 'Employees/All')
-        user.set_password(passwd)
-        user.set_password_never_expires(True)
-        user.set_password_expired(False)
-        user.set_user_account_control_settings(pyad.aduser.user)
-    
-        first_name, last_name = name.split()
-    
-        user.update_attribute('givenName', first_name)
-        user.update_attribute('sn', last_name)
-        user.update_attribute('displayName', f'{first_name} {last_name}')
-    
-        user.update()    
-        print(f'Пользователь создан:\n'
-              f'{ad_username}@kvadra.in.ua\n'
-              f'Логин: {ad_username}\n'
-              f'Пароль: {passwd}'
-              )
-    )
+    user.set_user_account_control_settings(pyad.aduser.user)
 
     # отримати ім'я та прізвище
     first_name, last_name = name.split()
@@ -113,8 +68,8 @@ if username:
     # вiдображення змін
     user.update()    
     passwd: str = password() 
-    print(f'Користувача створено:\n'
+    print(f'Пользователь создан:\n'
           f'{ad_username}@kvadra.in.ua\n'
-          f'Логін: {ad_username}\n'
+          f'Логин: {ad_username}\n'
           f'Пароль: {ad_password}'
           ) 
